@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "category": "Новости",
+        "link": "/news",
+        "subcategory": ["Москва", "Питер"],
+        "feature_news_limit": 6,
+        "news_limit": 12,
+        "posts": []
+    },
+    {
+        "id": 2,
+        "category": "Россия",
+        "link": "/news3",
+        "subcategory": ["Москва", "Питер"],
+        "feature_news_limit": 6,
+        "news_limit": 12,
+        "posts": []
+    },
+    {
+        "id": 2,
+        "category": "Коронавирус",
+        "link": "/news3",
+        "subcategory": [],
+        "feature_news_limit": 6,
+        "news_limit": 12,
+        "posts": []
+    }
+]
