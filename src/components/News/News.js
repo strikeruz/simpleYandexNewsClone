@@ -3,6 +3,8 @@ import uuid from 'react-uuid';
 
 const News = (props) => {
 	const { category, posts } = props;
+	console.log(posts);
+
 	return (
 		<div className='mg-grid__row mg-grid__row_gap_8'>
 			<div className='mg-grid__col mg-grid__col_xs_12 mg-grid__col_sm_12'>
@@ -17,11 +19,7 @@ const News = (props) => {
 						</a>
 					</div>
 				</div>
-				{posts.length > 0
-					? posts.map((post) => (
-							<NewsCategories key={uuid()} articles={post.articles} />
-					  ))
-					: 'Loading...'}
+				<NewsCategories key={uuid()} articles={posts.articles} />
 			</div>
 		</div>
 	);

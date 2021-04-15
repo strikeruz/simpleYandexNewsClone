@@ -4,16 +4,18 @@ import RenderRoutes from './components/Router/';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadAllCategoryFromDb } from './components/News/newsSlice';
 
-function App() {
+const App = () => {
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(loadAllCategoryFromDb());
-	}, [dispatch]);
-	const { loading, error } = useSelector((state) => state.news);
-	if (loading) return 'Loading...';
-	if (error) return 'Error';
+	const loading = useSelector((state) => state.news.loading);
 
-	return <RenderRoutes routes={pageRoutes} />;
-}
+	const loadCats = async () => {
+		await dispatch(loadAllCategoryFromDb());
+	};
+	useEffect(() => {
+		loadCats();
+	}, []);
+
+	return !loading && <RenderRoutes routes={pageRoutes} />;
+};
 
 export default App;

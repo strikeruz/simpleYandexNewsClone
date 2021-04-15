@@ -1,5 +1,6 @@
 import Home from './../components/Pages/Home';
 import NewsDetail from './../components/Pages/NewsDetail';
+import Categories from './../components/Pages/Categories';
 
 const pageRoutes = [
 	{
@@ -8,9 +9,9 @@ const pageRoutes = [
 		exact: true
 	},
 	{
-		component: NewsDetail,
-		path: '/news/:slug',
-		exact: false
+		component: Categories,
+		path: '/:slug',
+		exact: true
 	}
 ];
 

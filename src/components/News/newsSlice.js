@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { arrayEquals } from '../../utils';
 
 export const newsSlice = createSlice({
 	name: 'featureNews',
 	initialState: {
 		data: [],
-		loading: false,
+		loading: true,
 		error: null
 	},
 	reducers: {
@@ -23,7 +24,7 @@ export const newsSlice = createSlice({
 			const newsIndexByCatName = state.data.findIndex(
 				(el) => el.category === action.payload.category
 			);
-			state.data[newsIndexByCatName].posts.push(action.payload.data);
+			state.data[newsIndexByCatName].posts = action.payload.data;
 			state.loading = false;
 		}
 	}
@@ -42,13 +43,20 @@ export default newsSlice.reducer;
 export const selectAllCategory = (state) =>
 	state.news.data.map((e) => e.category);
 
-export const selectFeaturedNews = (state) => state.news.data;
+export const selectFeaturedNews = (state) =>
+	state.news.data.filter((e) => e.feature);
+
+export const selectMenus = (state) =>
+	state.news.data.map((e) => ({ title: e.category, link: e.link }));
+
+export const currentNews = (state) =>
+	state.news.data.map((e) => ({ title: e.category, link: e.link }));
 
 // Actions
 // Initialize all cats from DB
 export const loadAllCategoryFromDb = () => async (dispatch) => {
 	dispatch(loadNews());
-	await fetch('http://localhost:3000/seeds/news.json', {
+	await fetch('/seeds/news.json', {
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json'
@@ -57,12 +65,6 @@ export const loadAllCategoryFromDb = () => async (dispatch) => {
 		.then((response) => response.json())
 		.then((data) => {
 			dispatch(fetchAllCatsFromDb(data));
-			let categories = data.map((e) => e.category);
-			for (let index = 0; index < categories.length; index++) {
-				setTimeout(() => {
-					dispatch(loadNewsByCategory(categories[index]));
-				}, 1000);
-			}
 		})
 		.catch((e) => {
 			dispatch(errorNews(e));
@@ -70,10 +72,12 @@ export const loadAllCategoryFromDb = () => async (dispatch) => {
 		});
 };
 
-export const loadNewsByCategory = (searchCatName) => async (dispatch) => {
+export const loadNewsByCategory = (searchCatName, limit) => async (
+	dispatch
+) => {
 	try {
 		await fetch(
-			`${process.env.REACT_APP_API_URL}search?q=${searchCatName}&token=${process.env.REACT_APP_NEWS_API_KEY}`
+			`${process.env.REACT_APP_API_URL}search?q=${searchCatName}&token=${process.env.REACT_APP_NEWS_API_KEY}&max=${limit}`
 		)
 			.then((res) => res.json())
 			.then((data) => {

@@ -2,28 +2,99 @@
     {
         "id": 1,
         "category": "Новости",
-        "link": "/news",
-        "subcategory": ["Москва", "Питер"],
-        "feature_news_limit": 6,
-        "news_limit": 12,
+        "link": "/",
+        "feature": true,
+        "feature_news_limit": 9,
+        "news_limit": 9,
         "posts": []
     },
     {
         "id": 2,
         "category": "Россия",
-        "link": "/news3",
-        "subcategory": ["Москва", "Питер"],
-        "feature_news_limit": 6,
-        "news_limit": 12,
+        "link": "/russia",
+        "feature": true,
+        "feature_news_limit": 9,
+        "news_limit": 9,
         "posts": []
     },
     {
-        "id": 2,
+        "id": 3,
         "category": "Коронавирус",
-        "link": "/news3",
+        "link": "/coronavirus",
+        "feature": false,
         "subcategory": [],
-        "feature_news_limit": 6,
-        "news_limit": 12,
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 4,
+        "category": "Интересное",
+        "link": "/interesting",
+        "feature": false,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 5,
+        "category": "Политика",
+        "link": "/politics",
+        "feature": false,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 6,
+        "category": "Общество",
+        "link": "/soceity",
+        "feature": false,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 7,
+        "category": "Экономика",
+        "link": "/business",
+        "feature": false,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 8,
+        "category": "В мире",
+        "link": "/world",
+        "feature": false,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 9,
+        "category": "Спорт",
+        "link": "/sport",
+        "feature": true,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
+        "posts": []
+    },
+    {
+        "id": 9,
+        "category": "Происшествия",
+        "link": "/incident",
+        "feature": false,
+        "subcategory": [],
+        "feature_news_limit": 9,
+        "news_limit": 9,
         "posts": []
     }
 ]

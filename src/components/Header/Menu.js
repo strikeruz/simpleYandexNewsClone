@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useNav from '../../hooks/useNav';
+import { useSelector } from 'react-redux';
+import { selectMenus } from '../News/newsSlice';
+import { useParams } from 'react-router-dom';
 
 const Menu = () => {
 	const [activeMenu, setActiveMenu] = useState(0);
-	const navigations = useNav();
+	const navigations = useSelector(selectMenus);
+	const { slug } = useParams();
 	return (
 		<div className='topmenu'>
 			<nav className='topmenu__navmenu'>
@@ -12,8 +15,10 @@ const Menu = () => {
 					{navigations.map((nav, index) => (
 						<li
 							key={index}
-							className={index === activeMenu ? 'active' : ''}
-							onClick={() => setActiveMenu(index)}>
+							className={
+								nav.link === `/${slug}` || activeMenu === slug ? 'active' : ''
+							}
+							onClick={() => setActiveMenu(nav.link)}>
 							<Link to={nav.link}>{nav.title}</Link>
 						</li>
 					))}
