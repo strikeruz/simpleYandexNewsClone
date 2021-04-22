@@ -1,5 +1,4 @@
 import Home from './../components/Pages/Home';
-import NewsDetail from './../components/Pages/NewsDetail';
 import Categories from './../components/Pages/Categories';
 
 const pageRoutes = [

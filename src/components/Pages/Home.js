@@ -9,12 +9,7 @@ const Home = () => {
 	const featuredNews = useSelector(selectFeaturedNews);
 	const loadFeaturedNews = async () => {
 		for (let index = 0; index < featuredNews.length; index++) {
-			await dispatch(
-				loadNewsByCategory(
-					featuredNews[index].category,
-					featuredNews[index].feature_news_limit
-				)
-			);
+			await dispatch(loadNewsByCategory(featuredNews[index]));
 		}
 	};
 	useEffect(() => {

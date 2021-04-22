@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { arrayEquals } from '../../utils';
 
 export const newsSlice = createSlice({
 	name: 'featureNews',
 	initialState: {
 		data: [],
+		filtered_data: {
+			posts: []
+		},
 		loading: true,
 		error: null
 	},
@@ -21,10 +23,15 @@ export const newsSlice = createSlice({
 			state.loading = false;
 		},
 		loadNewsByCatsName: (state, action) => {
-			const newsIndexByCatName = state.data.findIndex(
-				(el) => el.category === action.payload.category
+			let index = state.data.findIndex(
+				(e) => e.id === action.payload.catItem.id
 			);
-			state.data[newsIndexByCatName].posts = action.payload.data;
+
+			state.data[index].posts = action.payload.data.articles;
+			state.loading = false;
+		},
+		filterSearchData: (state, action) => {
+			state.filtered_data.posts = action.payload;
 			state.loading = false;
 		}
 	}
@@ -34,7 +41,8 @@ export const {
 	loadNews,
 	errorNews,
 	fetchAllCatsFromDb,
-	loadNewsByCatsName
+	loadNewsByCatsName,
+	filterSearchData
 } = newsSlice.actions;
 
 export default newsSlice.reducer;
@@ -49,8 +57,15 @@ export const selectFeaturedNews = (state) =>
 export const selectMenus = (state) =>
 	state.news.data.map((e) => ({ title: e.category, link: e.link }));
 
-export const currentNews = (state) =>
-	state.news.data.map((e) => ({ title: e.category, link: e.link }));
+export const selectNews = (currentPageSlug) => (state) => {
+	const selectedNews = state.news.data.filter(
+		(e) => e.link === '/' + currentPageSlug
+	)[0];
+
+	return state.news.filtered_data.posts.length > 0
+		? state.news.filtered_data
+		: selectedNews;
+};
 
 // Actions
 // Initialize all cats from DB
@@ -72,17 +87,15 @@ export const loadAllCategoryFromDb = () => async (dispatch) => {
 		});
 };
 
-export const loadNewsByCategory = (searchCatName, limit) => async (
-	dispatch
-) => {
+export const loadNewsByCategory = (catItem) => async (dispatch) => {
 	try {
 		await fetch(
-			`${process.env.REACT_APP_API_URL}search?q=${searchCatName}&token=${process.env.REACT_APP_NEWS_API_KEY}&max=${limit}`
+			`${process.env.REACT_APP_API_URL}search?q=${catItem.category}&token=${process.env.REACT_APP_NEWS_API_KEY}&max=${catItem.news_limit}`
 		)
 			.then((res) => res.json())
 			.then((data) => {
 				const payload = {
-					category: searchCatName,
+					catItem,
 					data
 				};
 				dispatch(loadNewsByCatsName(payload));
